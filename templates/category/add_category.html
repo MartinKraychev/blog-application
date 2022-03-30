@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <div class="text-center">
+        <h2>Add Category</h2>
+    </div>
+    <br/>
+     <form action="{% url 'add category' %}" method="post" enctype="multipart/form-data">
+        {{ form }}
+        {% csrf_token %}
+         <div class="text-center"><br/>
+            <button class="btn btn-primary" type="submit">Create</button>
+        </div>
+    </form>
+{% endblock %}

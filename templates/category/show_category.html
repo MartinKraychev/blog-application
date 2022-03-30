@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_content %}
+
+    <div class="container bg-white pt-5">
+        {% if categories %}
+
+            {% for category in categories %}
+
+                <div class="bar">
+                    <a class="btn btn-primary btn-lg" type="submit" href="{% url 'edit category' category.id %}">{{ category.name }}</a>
+                    <p class="text-center">{{ category.description|truncatewords:30 }}</p>
+                </div>
+
+                <br>
+            {% endfor %}
+
+            <div class="text-center"><br/>
+                <a class="btn btn-primary btn-lg" type="submit" href="{% url 'add category' %}">Add new Category</a>
+            </div>
+
+
+        {% else %}
+            <h2>No Categories yet</h2>
+            <div class="text-center"><br/>
+                <a class="btn btn-primary" type="submit" href="{% url 'add category' %}">Add Category</a>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}
+

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <div class="text-center">
+        <h2>Edit Category</h2>
+    </div>
+    <br/>
+    <form action="{% url 'edit category' object.id %}" method="post" enctype="multipart/form-data">
+        {{ form }}
+        {% csrf_token %}
+        <div class="text-center"><br/>
+            <button class="btn btn-primary" type="submit">Edit</button>
+        </div>
+    </form>
+
+    <div class="text-center"><br/>
+        <a href="{% url 'delete category' object.id %}" class="btn btn-danger" type="submit">Delete</a>
+    </div>
+
+{% endblock %}

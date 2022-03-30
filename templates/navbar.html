@@ -1,0 +1,31 @@
+<div class="container p-0">
+    <nav class="navbar navbar-expand-lg bg-secondary navbar-dark">
+        <a href="" class="navbar-brand d-block d-lg-none">Navigation</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+            <div class="navbar-nav m-auto">
+                <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
+                <a href="{% url 'dashboard' %}" class="nav-item nav-link">Dashboard</a>
+                {% if request.user.is_authenticated %}
+                    {% if profile %}
+                        <a href="{% url 'edit profile' request.user.id %}" class="nav-item nav-link">Profile</a>
+                        <a href="{% url 'create post' %}" class="nav-item nav-link">Write a post</a>
+                    {% else %}
+                        <a href="{% url 'create profile' %}" class="nav-item nav-link">Create Profile</a>
+                    {% endif %}
+                    <a href="{% url 'sign out' %}" class="nav-item nav-link">Logout</a>
+                {% else %}
+                    <a href="{% url 'sign in' %}" class="nav-item nav-link">Login</a>
+                    <a href="{% url 'sign up' %}" class="nav-item nav-link">Register</a>
+                {% endif %}
+                {% if request.user.is_staff %}
+                    <a href="{% url 'categories' %}" class="nav-item nav-link">Categories</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</div>
+
+

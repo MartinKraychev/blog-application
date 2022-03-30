@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block page_content %}
+
+    <div class="text-center">
+        <h2>Are you sure you want to delete your post?</h2>
+    </div><br/>
+
+    <form action="{% url 'delete post' object.id %}" method="post" enctype="multipart/form-data">
+        {{ form }}
+        {% csrf_token %}
+        <div class="text-center"><br/>
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </div>
+    </form>
+
+     <div class="text-center"><br/>
+            <a href="{% url 'post details' object.id %}" class="btn btn-primary" type="submit">Go back</a>
+        </div>
+
+{% endblock %}

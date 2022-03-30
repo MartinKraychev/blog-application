@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <div class="text-center">
+        <h2>Registration form </h2>
+    </div><br/>
+    <form action="{% url 'sign up' %}" method="post">
+        {{ form }}
+        {% csrf_token %}
+        <div class="text-center"><br/>
+            <button class="btn btn-primary" type="submit">Register</button>
+        </div>
+    </form>
+    <div class="pad-small">Already have an account?
+        <a href="{% url 'sign in' %}" class="invert">Sign in here</a>
+    </div>
+{% endblock %}
