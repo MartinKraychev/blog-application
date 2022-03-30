@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from blog_app.profile_app.validators import MaxFileSizeInMbValidator
+from cloudinary.models import CloudinaryField
 
 UserModel = get_user_model()
 
@@ -30,13 +30,7 @@ class Profile(models.Model):
 
     description = models.TextField()
 
-    profile_image = models.ImageField(
-        upload_to=IMAGES_UPLOAD_TO,
-        verbose_name='',
-        validators=(
-            MaxFileSizeInMbValidator(IMAGE_MAX_FILE_SIZE_MB),
-        )
-    )
+    profile_image = CloudinaryField('image')
 
     facebook = models.URLField(
         verbose_name=FACEBOOK_VERBOSE_NAME,

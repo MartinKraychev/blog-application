@@ -1,5 +1,4 @@
 from django.urls import path
-from blog_app.profile_app.signals import delete_profile_picture
 from blog_app.profile_app.views import CreateProfileView, EditProfileView, ProfileView
 
 urlpatterns = (
