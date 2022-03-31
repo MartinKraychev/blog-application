@@ -30,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    'blog-aplication-django.herokuapp.com'
+    'bloggy-django.herokuapp.com'
 ]
 
 # Application definition
