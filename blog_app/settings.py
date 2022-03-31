@@ -157,8 +157,8 @@ LOGOUT_REDIRECT_URL = reverse_lazy('index')
 AUTH_USER_MODEL = 'user_auth.BlogUser'
 
 cloudinary.config(
-    cloud_name="dit4xwk2d",
-    api_key="466914426599631",
-    api_secret="p051W7lWta5UaDBS2XkOdsfjOBs",
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.getenv('CLOUDINARY_API_KEY'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET'),
     secure=True
 )
