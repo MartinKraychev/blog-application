@@ -27,13 +27,9 @@ SECRET_KEY = 'django-insecure-fpm=y%&!2l$bat-uge9=$m%xwbu0j^0umq73o8b)zv))#!x5$c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'bloggy-django.herokuapp.com'
-]
+APP_ENVIRONMENT = os.getenv('APP_ENVIRONMENT', 'Development')
 
-# Application definition
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1').split(' ')
 
 DJANGO_APPS = (
     'django.contrib.admin',
@@ -92,13 +88,14 @@ WSGI_APPLICATION = 'blog_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dfnnlrdo2n19pm',
-        'USER': 'dmubrsgzccztie',
-        'PASSWORD': 'd89295db63087ee5139c689d9a2d90114bd60dde4f52c7431235abbebf9a0699',
-        'HOST': 'ec2-52-18-116-67.eu-west-1.compute.amazonaws.com',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
         'PORT': '5432',
     }
 }
