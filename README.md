@@ -1,5 +1,5 @@
 # Bloggy - blog application
-Fully responsive social media and blog mixture application with Django and PostgreSQL.
+Fully responsive, mixture of social media and blog application with Django and PostgreSQL.
 
 Still in progress.
 
