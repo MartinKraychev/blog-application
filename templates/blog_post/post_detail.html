@@ -42,7 +42,17 @@
                         <img src="{{ comment.user.profile.profile_image.url }}" alt="Image"
                              class="mr-3 mt-1 rounded-circle" style="width:60px;">
                         <div class="media-body">
-                            <h4> {{ comment.user.profile.get_full_name }}</h4>
+                            {% if request.user == comment.user or not request.user.is_authenticated %}
+                                <h4 class="mr-2 text-muted"> {{ comment.user.profile.get_full_name }}</h4>
+
+                            {% else %}
+                                <a class="mr-2 text-muted" href="{% url 'view profile' comment.user.id %}">
+                                    <h4>{{ comment.user.profile.get_full_name }}</h4>
+                                </a>
+                            {% endif %}
+{#                            <a class="mr-2 text-muted" href="{% url 'view profile' object.user.id %}">#}
+{#                                <h4> {{ comment.user.profile.get_full_name }}</h4>#}
+{#                            </a>#}
                             <small>
                                 <i>{{ comment.created_on }}</i>
                             </small>
