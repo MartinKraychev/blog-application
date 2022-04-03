@@ -6,7 +6,7 @@
         </button>
         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
             <div class="navbar-nav m-auto">
-                <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
+                <a href="{% url 'index' %}" class="navbar-brand">Home</a>
                 <a href="{% url 'dashboard' %}" class="nav-item nav-link">Dashboard</a>
                 {% if request.user.is_authenticated %}
                     {% if profile %}
