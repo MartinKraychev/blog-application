@@ -26,10 +26,9 @@ class EditPostView(LoginRequiredMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.user != self.request.user:
-            return HttpResponse('Unauthorized', status=401)
-
-        return super().dispatch(request, *args, **kwargs)
+        if self.object.user == self.request.user or request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        return HttpResponse('Unauthorized', status=401)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -43,10 +42,9 @@ class DeletePostView(LoginRequiredMixin, DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.user != self.request.user:
-            return HttpResponse('Unauthorized', status=401)
-
-        return super().dispatch(request, *args, **kwargs)
+        if self.object.user == self.request.user or request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        return HttpResponse('Unauthorized', status=401)
 
 
 class DetailsPostView(FormMixin, DetailView):

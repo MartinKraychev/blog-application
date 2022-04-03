@@ -25,7 +25,7 @@
                 </p>
             </div>
 
-            {% if is_owner %}
+            {% if is_owner or request.user.is_superuser %}
                 <div class="text-center"><br/>
                     <a class="btn btn-primary" type="submit" href="{% url 'edit post' post.id %}">Edit</a>
                     <a class="btn btn-danger" type="submit" href="{% url 'delete post' post.id %}">Delete</a>
