@@ -50,6 +50,10 @@ class Comment(models.Model):
         auto_now_add=True,
     )
 
+    updated_on = models.DateTimeField(
+        auto_now=True,
+    )
+
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE

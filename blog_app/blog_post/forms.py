@@ -31,4 +31,14 @@ class CreateCommentForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = Comment
-        exclude = ('user', 'post', )
+        exclude = ('user', 'post',)
+
+
+class EditCommentForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    class Meta:
+        model = Comment
+        exclude = ('user', 'post',)

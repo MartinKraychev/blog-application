@@ -4,7 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView
 from django.views.generic.edit import FormMixin, UpdateView, DeleteView
 
-from blog_app.blog_post.forms import CreatePostForm, CreateCommentForm, EditPostForm
+from blog_app.blog_post.forms import CreatePostForm, CreateCommentForm, EditPostForm, EditCommentForm
 from blog_app.blog_post.models import Post, Comment
 
 
@@ -62,7 +62,7 @@ class DetailsPostView(FormMixin, DetailView):
         context['comments'] = Comment.objects.filter(post_id=self.object.id)
         context['can_not_comment'] = (
                 self.request.user.id == self.object.user.id or not self.request.user.is_authenticated)
-        context['is_owner'] = (self.request.user.id == self.object.user.id)
+        context['is_post_owner'] = (self.request.user.id == self.object.user.id)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -79,3 +79,36 @@ class DetailsPostView(FormMixin, DetailView):
         form.save()
 
         return super(DetailsPostView, self).form_valid(form)
+
+
+class EditCommentView(LoginRequiredMixin, UpdateView):
+    model = Comment
+    form_class = EditCommentForm
+    template_name = 'blog_post/edit_comment.html'
+
+    def get_success_url(self):
+        post_pk = self.object.post.id
+        return reverse('post details', kwargs={'pk': post_pk})
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.user == self.request.user or request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        return HttpResponse('Unauthorized', status=401)
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.post = self.object.post
+        form.save()
+        return super().form_valid(form)
+
+
+class DeleteCommentView(LoginRequiredMixin, DeleteView):
+    model = Comment
+    template_name = 'blog_post/delete_comment.html'
+
+    def get_success_url(self):
+        post_pk = self.object.post.id
+        return reverse('post details', kwargs={'pk': post_pk})
+
+
