@@ -41,6 +41,9 @@ class Post(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def __str__(self):
+        return f'{self.heading} posted by {self.user.profile.get_full_name()}'
+
 
 class Comment(models.Model):
 
@@ -63,3 +66,8 @@ class Comment(models.Model):
         UserModel,
         on_delete=models.CASCADE
     )
+
+    def __str__(self):
+        return f'{self.message} posted by {self.user.profile.get_full_name()}'
+
+
