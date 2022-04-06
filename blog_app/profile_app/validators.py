@@ -11,3 +11,9 @@ class MaxFileSizeInMbValidator:
         file_size = value.file.size
         if file_size > self.max_size * 1024 * 1024:
             raise ValidationError(f'Max file size is {self.max_size} MB')
+
+
+def validate_letters_only(value):
+    for ch in value:
+        if not ch.isalpha():
+            raise ValidationError('All symbols must be alphabetical')

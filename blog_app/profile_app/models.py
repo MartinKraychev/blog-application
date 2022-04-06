@@ -3,6 +3,8 @@ from django.db import models
 
 from cloudinary.models import CloudinaryField
 
+from blog_app.profile_app.validators import validate_letters_only
+
 UserModel = get_user_model()
 
 
@@ -20,10 +22,16 @@ class Profile(models.Model):
 
     first_name = models.CharField(
         max_length=FIRST_NAME_MAX_LENGTH,
+        validators=(
+            validate_letters_only,
+        ),
     )
 
     last_name = models.CharField(
         max_length=LAST_NAME_MAX_LENGTH,
+        validators=(
+            validate_letters_only,
+                    ),
     )
 
     age = models.IntegerField()
