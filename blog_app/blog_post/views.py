@@ -4,8 +4,8 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView
 from django.views.generic.edit import FormMixin, UpdateView, DeleteView
 
-from blog_app.blog_post.forms import CreatePostForm, CreateCommentForm, EditPostForm, EditCommentForm
-from blog_app.blog_post.models import Post, Comment
+from blog_app.blog_post.forms import CreatePostForm, CreateCommentForm, EditPostForm, EditCommentForm, CreateLikeForm
+from blog_app.blog_post.models import Post, Comment, PostLike
 
 
 class CreatePostView(LoginRequiredMixin, CreateView):
@@ -52,26 +52,52 @@ class DetailsPostView(FormMixin, DetailView):
     template_name = 'blog_post/post_detail.html'
     context_object_name = 'post'
     form_class = CreateCommentForm
+    second_form_class = CreateLikeForm
 
     def get_success_url(self):
         return reverse('post details', kwargs={'pk': self.object.id})
 
     def get_context_data(self, **kwargs):
         context = super(DetailsPostView, self).get_context_data(**kwargs)
-        context['form'] = CreateCommentForm(initial={'post': self.object})
+
+        context['comment_form'] = CreateCommentForm(initial={'post': self.object})
+        context['like_form'] = CreateLikeForm(initial={'post': self.object})
+
+        if self.request.user.is_authenticated:
+            context['liked'] = PostLike.objects.filter(user=self.request.user, post=self.object)
+
+        context['total_likes'] = PostLike.objects.filter(post=self.object).count
         context['comments'] = Comment.objects.filter(post_id=self.object.id)
-        context['can_not_comment'] = (
+        context['can_not_comment_or_like'] = (
                 self.request.user.id == self.object.user.id or not self.request.user.is_authenticated)
         context['is_post_owner'] = (self.request.user.id == self.object.user.id)
+
         return context
+
+    def form_invalid(self, **kwargs):
+        return self.render_to_response(self.get_context_data(**kwargs))
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
-        form = self.get_form()
+
+        if 'comment' in request.POST:
+
+            # get the primary form
+            form_class = self.get_form_class()
+            form_name = 'comment'
+
+        else:
+
+            # get the secondary form
+            form_class = self.second_form_class
+            form_name = 'like'
+
+        form = self.get_form(form_class)
+
         if form.is_valid():
             return self.form_valid(form)
         else:
-            return self.form_invalid(form)
+            return self.form_invalid(**{form_name: form})
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -110,5 +136,3 @@ class DeleteCommentView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         post_pk = self.object.post.id
         return reverse('post details', kwargs={'pk': post_pk})
-
-

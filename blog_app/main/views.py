@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.views.generic import TemplateView, ListView
 
 from blog_app.blog_category.models import Category
@@ -14,6 +15,13 @@ class DashboardView(ListView):
     context_object_name = 'posts'
     paginate_by = 5
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.annotate(
+            number_of_likes=Count('postlike')
+        ).order_by('-number_of_likes')
+        return queryset
+
 
 class ShowDashboardCategory(ListView):
     model = Post
@@ -26,9 +34,13 @@ class ShowDashboardCategory(ListView):
 
     def get_queryset(self):
         category = Category.objects.filter(name=self.get_category_name()).first()
-        query_set = Post.objects.filter(category=category)
+        queryset = Post.objects.filter(category=category)\
+            .annotate(
+            number_of_likes=Count('postlike')
+        )\
+            .order_by('-number_of_likes')
 
-        return query_set
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(ShowDashboardCategory, self).get_context_data(**kwargs)

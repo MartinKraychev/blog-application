@@ -19,6 +19,8 @@
                         <a class="mr-2 text-muted" href="{% url 'view profile' object.user.id %}"><i
                                 class="fa fa-user"></i>{{ object.user.profile.get_full_name }}</a>
                     {% endif %}
+                    <p class="mr-2 text-muted"><i
+                            class="fa fa-thumbs-up"></i>{{ total_likes }}</p>
                 </div>
                 <p>
                     {{ post.text }}
@@ -58,7 +60,8 @@
                                     <div class="text-align">
                                         <a class="btn btn-primary" type="submit"
                                            href="{% url 'edit comment' comment.id %}">Edit comment</a>
-                                        <a class="btn btn-danger" type="submit" href="{% url 'delete comment' comment.id %}">Delete
+                                        <a class="btn btn-danger" type="submit"
+                                           href="{% url 'delete comment' comment.id %}">Delete
                                             comment</a>
                                     </div>
                                 {% endif %}
@@ -72,23 +75,49 @@
             {# Comments end #}
 
             {# Leave a comment starts #}
-            {% if not can_not_comment %}
+            {% if not can_not_comment_or_like %}
 
                 {# Owners and not authenticated users can't comment #}
 
                 <div class="col-12">
                     <h3 class="mb-4 font-weight-bold">Leave a comment</h3>
                     <form method="post" action="{% url 'post details' post.id %}">
-                        {{ form }}
+                        {{ comment_form }}
                         {% csrf_token %}
 
                         <div class="text-center"><br/>
-                            <button class="btn btn-primary" type="submit">Leave a comment</button>
+                            <button class="btn btn-primary" name="comment" type="submit">Leave a comment</button>
                         </div>
                     </form>
                 </div>
             {% endif %}
+
             {# Leave a comment ends #}
+
+            {# Like logic #}
+            {% if liked %}
+
+                <p>You already liked this post.</p>
+
+            {% elif can_not_comment_or_like %}
+
+            {% else %}
+
+                <form method="post" action="{% url 'post details' post.id %}">
+                    {{ like_form_form }}
+                    {% csrf_token %}
+
+                    <div class="text-center"><br/>
+                        <button class="btn btn-primary" name="like" type="submit"><i class="fa fa-thumbs-up"></i>
+                        </button>
+                    </div>
+                </form>
+
+            {% endif %}
+
+            {# End Like logic #}
+
+
             {% if is_post_owner or request.user.is_superuser %}
                 <div class="text-center col-12"><br/>
                     <a class="btn btn-primary" type="submit" href="{% url 'edit post' post.id %}">Edit post</a>

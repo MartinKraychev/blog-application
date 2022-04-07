@@ -1,6 +1,6 @@
 from django import forms
 
-from blog_app.blog_post.models import Post, Comment
+from blog_app.blog_post.models import Post, Comment, PostLike
 from blog_app.main.mixins import BootstrapFormMixin
 
 
@@ -41,4 +41,11 @@ class EditCommentForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = Comment
+        exclude = ('user', 'post',)
+
+
+class CreateLikeForm(forms.ModelForm):
+
+    class Meta:
+        model = PostLike
         exclude = ('user', 'post',)

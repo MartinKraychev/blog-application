@@ -41,12 +41,14 @@ class Post(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def total_likes(self):
+        return PostLike.objects.filter(post=self).count()
+
     def __str__(self):
-        return f'{self.heading} posted by {self.user.profile.get_full_name()}'
+        return f'"{self.heading}" posted by {self.user.profile.get_full_name()}'
 
 
 class Comment(models.Model):
-
     message = models.TextField()
 
     created_on = models.DateTimeField(
@@ -68,6 +70,19 @@ class Comment(models.Model):
     )
 
     def __str__(self):
-        return f'{self.message} posted by {self.user.profile.get_full_name()}'
+        return f'"{self.message}" posted by {self.user.profile.get_full_name()}'
 
 
+class PostLike(models.Model):
+
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE
+    )
+
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE
+    )
+
+    created = models.DateTimeField(auto_now_add=True)
