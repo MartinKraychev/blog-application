@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
@@ -40,7 +41,7 @@ class EditPostView(LoginRequiredMixin, UpdateView):
         self.object = self.get_object()
         if self.object.user == self.request.user:
             return super().dispatch(request, *args, **kwargs)
-        return HttpResponse('Unauthorized', status=401)
+        raise PermissionDenied
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -56,7 +57,7 @@ class DeletePostView(LoginRequiredMixin, DeleteView):
         self.object = self.get_object()
         if self.object.user == self.request.user:
             return super().dispatch(request, *args, **kwargs)
-        return HttpResponse('Unauthorized', status=401)
+        raise PermissionDenied
 
 
 class DetailsPostView(FormMixin, DetailView):
@@ -132,7 +133,7 @@ class EditCommentView(LoginRequiredMixin, UpdateView):
         self.object = self.get_object()
         if self.object.user == self.request.user:
             return super().dispatch(request, *args, **kwargs)
-        return HttpResponse('Unauthorized', status=401)
+        raise PermissionDenied
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -148,3 +149,9 @@ class DeleteCommentView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         post_pk = self.object.post.id
         return reverse('post details', kwargs={'pk': post_pk})
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.user == self.request.user:
+            return super().dispatch(request, *args, **kwargs)
+        raise PermissionDenied

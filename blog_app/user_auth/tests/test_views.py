@@ -17,11 +17,6 @@ UserModel = get_user_model()
 
 class TestUserRegistrationView(TestCase):
 
-    def setUp(self):
-        group_name = "regular_user"
-        self.group = Group(name=group_name)
-        self.group.save()
-
     def test_if_template_is_correct(self):
         response = self.client.get(reverse('sign up'))
         self.assertEqual(response.status_code, 200)

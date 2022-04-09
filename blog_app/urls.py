@@ -27,3 +27,8 @@ urlpatterns = [
     path('categories/', include('blog_app.blog_category.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'blog_app.main.views.show404'
+handler403 = 'blog_app.main.views.show403'
+handler500 = 'blog_app.main.views.show500'
+handler400 = 'blog_app.main.views.show400'

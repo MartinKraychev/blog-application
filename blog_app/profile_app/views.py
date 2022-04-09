@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
@@ -40,7 +41,7 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
         self.object = self.get_object()
         if self.object.user == self.request.user:
             return super().dispatch(request, *args, **kwargs)
-        return HttpResponse('Unauthorized', status=401)
+        raise PermissionDenied
 
     def form_valid(self, form):
         form.instance.user = self.request.user

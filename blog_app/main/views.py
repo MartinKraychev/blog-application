@@ -1,4 +1,5 @@
 from django.db.models import Count
+from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 
 from blog_app.blog_category.models import Category
@@ -34,10 +35,10 @@ class ShowDashboardCategory(ListView):
 
     def get_queryset(self):
         category = Category.objects.filter(name=self.get_category_name()).first()
-        queryset = Post.objects.filter(category=category)\
+        queryset = Post.objects.filter(category=category) \
             .annotate(
             number_of_likes=Count('postlike')
-        )\
+        ) \
             .order_by('-number_of_likes')
 
         return queryset
@@ -48,3 +49,19 @@ class ShowDashboardCategory(ListView):
         context['categories'] = Category.objects.all()
 
         return context
+
+
+def show404(request, exception):
+    return render(request, 'error_codes/404.html')
+
+
+def show403(request, exception):
+    return render(request, 'error_codes/403.html')
+
+
+def show500(request, exception):
+    return render(request, 'error_codes/500.html')
+
+
+def show400(request, exception):
+    return render(request, 'error_codes/400.html')

@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.models import Group
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 
 from django.urls import reverse_lazy
@@ -67,6 +68,6 @@ class DeleteAccountView(LoginRequiredMixin, DeleteView):
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         if self.object != self.request.user:
-            return HttpResponse('Unauthorized', status=401)
+            raise PermissionDenied
 
         return super().dispatch(request, *args, **kwargs)
