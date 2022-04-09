@@ -1,17 +1,29 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView
 from django.views.generic.edit import FormMixin, UpdateView, DeleteView
 
 from blog_app.blog_post.forms import CreatePostForm, CreateCommentForm, EditPostForm, EditCommentForm, CreateLikeForm
 from blog_app.blog_post.models import Post, Comment, PostLike
+from blog_app.profile_app.templatetags.profile import get_profile
 
 
 class CreatePostView(LoginRequiredMixin, CreateView):
     form_class = CreatePostForm
     template_name = 'blog_post/create_post.html'
     success_url = reverse_lazy('dashboard')
+
+    def dispatch(self, request, *args, **kwargs):
+        profile = get_profile(
+            {'request': self.request}
+        )
+
+        if not profile:
+            return redirect(reverse('create profile'))
+
+        return super(CreatePostView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -26,7 +38,7 @@ class EditPostView(LoginRequiredMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.user == self.request.user or request.user.is_superuser:
+        if self.object.user == self.request.user:
             return super().dispatch(request, *args, **kwargs)
         return HttpResponse('Unauthorized', status=401)
 
@@ -42,7 +54,7 @@ class DeletePostView(LoginRequiredMixin, DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.user == self.request.user or request.user.is_superuser:
+        if self.object.user == self.request.user:
             return super().dispatch(request, *args, **kwargs)
         return HttpResponse('Unauthorized', status=401)
 
@@ -118,7 +130,7 @@ class EditCommentView(LoginRequiredMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.user == self.request.user or request.user.is_superuser:
+        if self.object.user == self.request.user:
             return super().dispatch(request, *args, **kwargs)
         return HttpResponse('Unauthorized', status=401)
 

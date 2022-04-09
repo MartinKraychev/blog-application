@@ -118,7 +118,7 @@
             {# End Like logic #}
 
 
-            {% if is_post_owner or request.user.is_superuser %}
+            {% if is_post_owner%}
                 <div class="text-center col-12"><br/>
                     <a class="btn btn-primary" type="submit" href="{% url 'edit post' post.id %}">Edit post</a>
                     <a class="btn btn-danger" type="submit" href="{% url 'delete post' post.id %}">Delete post</a>
