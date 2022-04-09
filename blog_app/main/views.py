@@ -59,7 +59,7 @@ def show403(request, exception):
     return render(request, 'error_codes/403.html')
 
 
-def show500(request, exception):
+def show500(request):
     return render(request, 'error_codes/500.html')
 
 
