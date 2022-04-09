@@ -45,7 +45,7 @@ class Post(models.Model):
         return PostLike.objects.filter(post=self).count()
 
     def __str__(self):
-        return f'"{self.heading}" posted by {self.user.profile.get_full_name()}'
+        return f'{self.heading}'
 
 
 class Comment(models.Model):
@@ -70,7 +70,7 @@ class Comment(models.Model):
     )
 
     def __str__(self):
-        return f'"{self.message}" posted by {self.user.profile.get_full_name()}'
+        return f'{self.message}'
 
 
 class PostLike(models.Model):
@@ -86,3 +86,6 @@ class PostLike(models.Model):
     )
 
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f' like on {self.post.heading}'

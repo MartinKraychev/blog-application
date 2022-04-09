@@ -45,5 +45,6 @@ class ShowDashboardCategory(ListView):
     def get_context_data(self, **kwargs):
         context = super(ShowDashboardCategory, self).get_context_data(**kwargs)
         context['category'] = self.get_category_name()
+        context['categories'] = Category.objects.all()
 
         return context

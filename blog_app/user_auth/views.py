@@ -23,9 +23,6 @@ class UserRegistrationView(CreateView):
         result = super().form_valid(*args, **kwargs)
         auth_login(self.request, self.object)
 
-        group = Group.objects.get(name='regular_user')
-        self.request.user.groups.add(group)
-
         return result
 
 

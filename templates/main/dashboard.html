@@ -3,7 +3,16 @@
 {% block page_content %}
 
     {% if category %}
-         <h2 class="mt-md-4 px-md-3 mb-2 py-2 bg-white font-weight-bold">{{ category }}</h2>
+        <br>
+        <a class='dropdown-toggle' data-toggle='dropdown' role='button'
+           aria-expanded='false'>{{ category }}<span class='caret'></span></a>
+        <ul class="dropdown-menu" role="menu">
+            {% for cat in categories %}
+                <li>
+                    <a href="{% url 'dashboard category' cat.name %}">{{ cat.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
     {% endif %}
 
     <div class="container bg-white pt-5">
