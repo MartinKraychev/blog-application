@@ -38,7 +38,7 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.user == self.request.user or request.user.is_superuser:
+        if self.object.user == self.request.user:
             return super().dispatch(request, *args, **kwargs)
         return HttpResponse('Unauthorized', status=401)
 
