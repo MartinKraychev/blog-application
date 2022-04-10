@@ -1,9 +1,9 @@
 # Bloggy - blog application
 Fully responsive, mixture of social media and blog application with Django and PostgreSQL.
 
-##It's deployed in Heroku - https://bloggy-django.herokuapp.com/
+## It's deployed in Heroku - https://bloggy-django.herokuapp.com/
 
-###If you want to test it locally follow this Setup:
+### If you want to test it locally follow this Setup:
 
 1. Clone git repo - $ git clone https://github.com/MartinKraychev/blog-application.git
 2. Select the dir - $ cd blog-application
