@@ -5,6 +5,8 @@ Fully responsive, mixture of social media and blog application with Django and P
 
 ### If you want to test it locally follow this Setup:
 
+For Windows: 
+
 1. Clone git repo - $ git clone https://github.com/MartinKraychev/blog-application.git
 2. Select the dir - $ cd blog-application
 3. Install virtual env - $ pip install virtualenv
