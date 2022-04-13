@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block page_content %}
+
     {# Post Details start #}
     <div class="container py-5 px-2 bg-white">
         <div class="row px-4">
@@ -38,6 +39,7 @@
                         <img src="{{ comment.user.profile.profile_image.url }}" alt="Image"
                              class="mr-3 mt-1 rounded-circle" style="width:60px;">
                         <div class="media-body">
+                            {#  Not authenticated users and owners can not click on the profile link #}
                             {% if request.user == comment.user or not request.user.is_authenticated %}
                                 <h4 class="mr-2 text-muted"> {{ comment.user.profile.get_full_name }}</h4>
 
@@ -46,9 +48,7 @@
                                     <h4>{{ comment.user.profile.get_full_name }}</h4>
                                 </a>
                             {% endif %}
-                            {#                            <a class="mr-2 text-muted" href="{% url 'view profile' object.user.id %}">#}
-                            {#                                <h4> {{ comment.user.profile.get_full_name }}</h4>#}
-                            {#                            </a>#}
+
                             <small>
                                 <i>{{ comment.updated_on }}</i>
                             </small>
@@ -57,6 +57,7 @@
                                     {{ comment.message }}
                                 </p>
                                 {% if request.user.id == comment.user.id %}
+                                    {#  Users can edit and delete own comments #}
                                     <div class="text-align">
                                         <a class="btn btn-primary" type="submit"
                                            href="{% url 'edit comment' comment.id %}">Edit comment</a>
@@ -95,12 +96,13 @@
             {# Leave a comment ends #}
 
             {# Like logic #}
+
             {% if liked %}
 
                 <p>You already liked this post.</p>
 
             {% elif can_not_comment_or_like %}
-
+            {#  Nothing happens #}
             {% else %}
 
                 <form method="post" action="{% url 'post details' post.id %}">
@@ -118,7 +120,7 @@
             {# End Like logic #}
 
 
-            {% if is_post_owner%}
+            {% if is_post_owner %}
                 <div class="text-center col-12"><br/>
                     <a class="btn btn-primary" type="submit" href="{% url 'edit post' post.id %}">Edit post</a>
                     <a class="btn btn-danger" type="submit" href="{% url 'delete post' post.id %}">Delete post</a>

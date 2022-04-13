@@ -27,6 +27,7 @@
     {% get_profile as profile %}
 
     {% if  profile %}
+        {# Profile starts here #}
         <div class="sidebar">
             <div class="sidebar-text d-flex flex-column h-100 justify-content-center text-center">
                 <img src="{{ profile.profile_image.url }}"
@@ -39,19 +40,23 @@
                 <div class="d-flex justify-content-center mb-5">
 
                     {% if profile.facebook %}
-                        <a class="btn btn-outline-primary mr-2" href="{{ profile.facebook }}"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-primary mr-2" href="{{ profile.facebook }}"><i
+                                class="fab fa-facebook-f"></i></a>
                     {% endif %}
 
                     {% if profile.linkedin %}
-                        <a class="btn btn-outline-primary mr-2" href="{{ profile.linkedin }}"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-outline-primary mr-2" href="{{ profile.linkedin }}"><i
+                                class="fab fa-linkedin-in"></i></a>
                     {% endif %}
 
                     {% if profile.github %}
-                        <a class="btn btn-outline-primary mr-2" href="{{ profile.github }}"><i class="fab fa-github"></i></a>
+                        <a class="btn btn-outline-primary mr-2" href="{{ profile.github }}"><i
+                                class="fab fa-github"></i></a>
                     {% endif %}
 
                     {% if profile.twitter %}
-                        <a class="btn btn-outline-primary mr-2" href="{{ profile.twitter }}"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-primary mr-2" href="{{ profile.twitter }}"><i
+                                class="fab fa-twitter"></i></a>
                     {% endif %}
 
                 </div>
@@ -60,10 +65,14 @@
                 <i class="fas fa-2x fa-angle-double-right text-primary"></i>
             </div>
         </div>
+
+        {# Profile ends here #}
+
     {% else %}
 
     {% endif %}
 
+    {# Content starts here #}
     {% if not profile %}
         <div class="content" style="width:100%;height:100%">
     {% else %}
@@ -78,13 +87,15 @@
     <!-- Footer Start -->
     <div class="container py-4 bg-secondary text-center">
         <p class="m-0 text-white">
-             &copy; <a class="text-white font-weight-bold" href="https://bloggy-django.herokuapp.com/">Bloggy - personal blog</a>. All Rights Reserved. Designed by <a class="text-white font-weight-bold" href="https://htmlcodex.com">HTML Codex</a>
+            &copy; <a class="text-white font-weight-bold" href="https://bloggy-django.herokuapp.com/">Bloggy - personal
+            blog</a>. All Rights Reserved. Designed by <a class="text-white font-weight-bold"
+                                                          href="https://htmlcodex.com">HTML Codex</a>
         </p>
     </div>
     <!-- Footer End -->
     </div>
 
-    </div>
+    {# Content ends here #}
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>

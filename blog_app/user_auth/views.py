@@ -1,13 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
-from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
-
 from django.urls import reverse_lazy
 from django.contrib.auth import login as auth_login, logout, get_user_model
 from django.views.generic import CreateView, DeleteView
-
 from blog_app.profile_app.templatetags.profile import get_profile
 from blog_app.user_auth.forms import MyUserCreationForm, MyAuthenticationForm, MyPasswordChangeForm
 

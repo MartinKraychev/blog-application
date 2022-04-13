@@ -1,11 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView
 from django.views.generic.edit import FormMixin, UpdateView, DeleteView
-
 from blog_app.blog_post.forms import CreatePostForm, CreateCommentForm, EditPostForm, EditCommentForm, CreateLikeForm
 from blog_app.blog_post.models import Post, Comment, PostLike
 from blog_app.profile_app.templatetags.profile import get_profile

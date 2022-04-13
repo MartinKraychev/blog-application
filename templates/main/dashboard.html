@@ -3,6 +3,7 @@
 {% block page_content %}
 
     {% if category %}
+    {# This is  dashboard by category view #}
         <br>
         <a class='dropdown-toggle' data-toggle='dropdown' role='button'
            aria-expanded='false'>{{ category }}<span class='caret'></span></a>
@@ -48,6 +49,8 @@
 
             {% endfor %}
 
+            {# Paginator starts #}
+
             <div class="pagination">
                 <span class="step-links">
                     {% if page_obj.has_previous %}
@@ -66,11 +69,15 @@
                 </span>
             </div>
 
+            {# Paginator ends #}
+
         {% else %}
+
             <h2>Nobody has posted yet</h2>
             <div class="text-center"><br/>
                 <a class="btn btn-primary" type="submit" href="{% url 'create post' %}">Write the first post</a>
             </div>
+
         {% endif %}
 
 

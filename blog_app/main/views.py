@@ -1,7 +1,6 @@
 from django.db.models import Count
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
-
 from blog_app.blog_category.models import Category
 from blog_app.blog_post.models import Post
 

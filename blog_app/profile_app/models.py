@@ -9,11 +9,9 @@ UserModel = get_user_model()
 
 
 class Profile(models.Model):
-    IMAGE_MAX_FILE_SIZE_MB = 5
+
     FIRST_NAME_MAX_LENGTH = 20
     LAST_NAME_MAX_LENGTH = 20
-
-    IMAGES_UPLOAD_TO = 'profiles'
 
     FACEBOOK_VERBOSE_NAME = 'Facebook Link'
     LINKEDIN_VERBOSE_NAME = 'LinkedIn Link'
