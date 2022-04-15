@@ -32,7 +32,7 @@ class Profile(models.Model):
                     ),
     )
 
-    age = models.IntegerField()
+    age = models.PositiveIntegerField()
 
     description = models.TextField()
 
