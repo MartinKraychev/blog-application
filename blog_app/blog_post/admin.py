@@ -5,14 +5,14 @@ from blog_app.blog_post.models import Post, Comment, PostLike
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('__str__', 'user')
 
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('__str__', 'post', 'user')
 
 
 @admin.register(PostLike)
 class PostLikeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('__str__', 'post', 'user')
